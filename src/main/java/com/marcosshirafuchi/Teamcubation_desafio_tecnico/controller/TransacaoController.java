@@ -1,13 +1,16 @@
 package com.marcosshirafuchi.Teamcubation_desafio_tecnico.controller;
 
 import com.marcosshirafuchi.Teamcubation_desafio_tecnico.dto.TransacaoDto;
-import com.marcosshirafuchi.Teamcubation_desafio_tecnico.model.Transacao;
+import com.marcosshirafuchi.Teamcubation_desafio_tecnico.exception.TransacaoInvalidaException;
 import com.marcosshirafuchi.Teamcubation_desafio_tecnico.service.TransacaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.server.ResponseStatusException;
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 @RestController
@@ -16,23 +19,36 @@ public class TransacaoController {
 
     @Autowired
     private TransacaoService transacaoService;
-    @PostMapping
-    public ResponseEntity<List<TransacaoDto>> salvar(@RequestBody List<TransacaoDto> body){
-//        for (int i=0;i<body.size();i++){
-//            if (body.contains(body.get(i).getValor()<0)) {
-//                return ResponseEntity.badRequest().body("Custom header set");;
-//            }
-//        }
 
-//        if (body.contains(body.get().getValor()<0)){
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body();
-//        }
-        List<TransacaoDto> result = transacaoService.save(body);
-        return ResponseEntity.status(HttpStatus.OK).body(result);
+    @PostMapping
+    public ResponseEntity<List<TransacaoDto>> salvar(@Validated @RequestBody List<TransacaoDto> body) throws Exception {
+        try {
+
+            TransacaoDto transacaoDto = null;
+            for (int i = 0; i < body.size(); i++) {
+                transacaoDto = body.get(i);
+            }
+            validarTransacao(transacaoDto);
+            List<TransacaoDto> result = transacaoService.save(body);
+            return ResponseEntity.status(HttpStatus.OK).body(result);
+
+        } catch (TransacaoInvalidaException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<String> findById(@PathVariable Integer id){
-        return ResponseEntity.ok("Deu certo para ID: " + id);
+    private void validarTransacao(TransacaoDto transacaoDto) throws TransacaoInvalidaException {
+        if (transacaoDto.getValor() < 0) {
+            throw new TransacaoInvalidaException("O valor da transação não pode ser negativo.");
+        }
+
+        if (transacaoDto.getDataHora().isAfter(OffsetDateTime.now(ZoneId.systemDefault()))) {
+            throw new TransacaoInvalidaException("Não pode colocar data futura!");
+        }
+        if (transacaoDto.getDataHora().isBefore(OffsetDateTime.now(ZoneId.systemDefault()))) {
+            throw new TransacaoInvalidaException("Não pode colocar data passada!");
+        }
+
     }
 }

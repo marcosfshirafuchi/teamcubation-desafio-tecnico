@@ -1,22 +1,21 @@
 package com.marcosshirafuchi.Teamcubation_desafio_tecnico.dto;
 
+import com.fasterxml.jackson.datatype.jsr310.ser.OffsetDateTimeSerializer;
+import jakarta.validation.constraints.Positive;
+
+import java.time.Clock;
 import java.time.OffsetDateTime;
+import java.util.Date;
 
 public class TransacaoDto {
+    @Positive(message = "O preço deve ser positivo")
     private Float valor;
-    //private OffsetDateTime dataHora;
+    private OffsetDateTime dataHora;
 
-
-    public TransacaoDto(Float valor) {
-//        if (valor<0){
-//            System.out.println("O valo não pode ser negativo");
-//        }
-        this.valor = valor;
-    }
 
     public TransacaoDto(Float valor, OffsetDateTime dataHora) {
         this.valor = valor;
-       // this.dataHora = dataHora.;
+        this.dataHora = dataHora;
     }
 
     public Float getValor() {
@@ -27,11 +26,12 @@ public class TransacaoDto {
         this.valor = valor;
     }
 
-//    public OffsetDateTime getDataHora() {
-//        return dataHora;
-//    }
-//
-//    public void setDataHora(OffsetDateTime dataHora) {
-//        this.dataHora = dataHora;
-//    }
+    public OffsetDateTime getDataHora() {
+        return dataHora;
+    }
+
+    public void setDataHora(OffsetDateTime dataHora) {
+        this.dataHora = dataHora;
+    }
+
 }

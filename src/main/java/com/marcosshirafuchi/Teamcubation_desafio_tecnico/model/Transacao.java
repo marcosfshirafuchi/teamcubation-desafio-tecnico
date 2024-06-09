@@ -1,20 +1,18 @@
 package com.marcosshirafuchi.Teamcubation_desafio_tecnico.model;
 
+import java.time.Clock;
 import java.time.OffsetDateTime;
 
 public class Transacao {
     private Long id;
     private Float valor;
-    private OffsetDateTime dataHora;
+    private OffsetDateTime dataHora = OffsetDateTime.now(Clock.systemUTC());
 
-    public Transacao(Long id,Float valor) {
+
+    public Transacao(Long id, Float valor, OffsetDateTime dataHora) {
         this.id = id;
         this.valor = valor;
-    }
-
-    public Transacao(Float valor, OffsetDateTime dataHora) {
-        this.valor = valor;
-        this.dataHora = dataHora;
+        this.dataHora =dataHora;
     }
 
     public Long getId() {
@@ -34,6 +32,7 @@ public class Transacao {
     }
 
     public OffsetDateTime getDataHora() {
+
         return dataHora;
     }
 

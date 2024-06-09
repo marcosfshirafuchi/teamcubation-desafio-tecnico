@@ -4,8 +4,14 @@ import com.marcosshirafuchi.Teamcubation_desafio_tecnico.dto.TransacaoDto;
 import com.marcosshirafuchi.Teamcubation_desafio_tecnico.model.Transacao;
 import com.marcosshirafuchi.Teamcubation_desafio_tecnico.repository.TransacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -15,18 +21,19 @@ public class TransacaoService {
     private TransacaoRepository repository;
 
     public List<TransacaoDto> save(List<TransacaoDto> transacaoDtoList) {
+
+
         transacaoDtoList.forEach(value -> {
             Random random = new Random();
             long randomInt = random.nextLong(500);
-            Transacao transacao = new Transacao(randomInt,value.getValor());
-            //Transacao transacao = new Transacao(value.getValor(), value.getDataHora());
+            Transacao transacao = new Transacao(randomInt,value.getValor(), value.getDataHora());
             repository.getList().add(transacao);
         });
 
         List<Transacao> listTransacao = repository.getList();
         List<TransacaoDto> resultTransacaoDto = listTransacao.stream().map(
-                value -> new TransacaoDto(value.getValor())
-                //value -> new TransacaoDto(value.getValor(), value.getDataHora())
+                //value -> new TransacaoDto(value.getValor())
+                value -> new TransacaoDto(value.getValor(), value.getDataHora())
         ).toList();
 
         return resultTransacaoDto;
