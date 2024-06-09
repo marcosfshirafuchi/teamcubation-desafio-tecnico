@@ -1,5 +1,4 @@
 package com.marcosshirafuchi.Teamcubation_desafio_tecnico.controller;
-
 import com.marcosshirafuchi.Teamcubation_desafio_tecnico.dto.TransacaoDto;
 import com.marcosshirafuchi.Teamcubation_desafio_tecnico.exception.TransacaoInvalidaException;
 import com.marcosshirafuchi.Teamcubation_desafio_tecnico.service.TransacaoService;
@@ -14,7 +13,7 @@ import java.time.ZoneId;
 import java.util.List;
 
 @RestController
-@RequestMapping("api")
+@RequestMapping
 public class TransacaoController {
 
     @Autowired
@@ -42,7 +41,6 @@ public class TransacaoController {
     public ResponseEntity<List<TransacaoDto>> delete(){
         List<TransacaoDto> productDtoList = transacaoService.delete();
         return ResponseEntity.status(HttpStatus.OK).body(productDtoList);
-        ///return ResponseEntity.status(HttpStatus.OK);
     }
 
     private void validarTransacao(TransacaoDto transacaoDto) throws TransacaoInvalidaException {
@@ -50,9 +48,9 @@ public class TransacaoController {
             throw new TransacaoInvalidaException("O valor da transação não pode ser negativo.");
         }
 
-//        if (transacaoDto.getDataHora().isAfter(OffsetDateTime.now(ZoneId.systemDefault()))) {
-//            throw new TransacaoInvalidaException("Não pode colocar data futura!");
-//        }
+        if (transacaoDto.getDataHora().isAfter(OffsetDateTime.now(ZoneId.systemDefault()))) {
+            throw new TransacaoInvalidaException("Não pode colocar data futura!");
+        }
         if (transacaoDto.getDataHora().isBefore(OffsetDateTime.now(ZoneId.systemDefault()))) {
             throw new TransacaoInvalidaException("Não pode colocar data passada!");
         }
