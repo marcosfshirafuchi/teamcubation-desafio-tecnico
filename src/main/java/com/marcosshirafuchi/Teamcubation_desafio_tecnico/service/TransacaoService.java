@@ -4,14 +4,9 @@ import com.marcosshirafuchi.Teamcubation_desafio_tecnico.dto.TransacaoDto;
 import com.marcosshirafuchi.Teamcubation_desafio_tecnico.model.Transacao;
 import com.marcosshirafuchi.Teamcubation_desafio_tecnico.repository.TransacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
-import java.util.Date;
+
 import java.util.List;
 import java.util.Random;
 
@@ -38,4 +33,13 @@ public class TransacaoService {
 
         return resultTransacaoDto;
     }
+    public List<TransacaoDto> delete(){
+        List<Transacao> listProduct = repository.getList();
+        List<TransacaoDto> transacaoDto = listProduct.stream().map(
+                value -> new TransacaoDto(value.getValor(),value.getDataHora())
+        ).toList();
+
+        return transacaoDto;
+    }
+
 }

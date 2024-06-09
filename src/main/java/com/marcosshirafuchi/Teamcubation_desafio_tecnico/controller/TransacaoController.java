@@ -38,6 +38,13 @@ public class TransacaoController {
 
     }
 
+    @DeleteMapping("/transacao")
+    public ResponseEntity<List<TransacaoDto>> delete(){
+        List<TransacaoDto> productDtoList = transacaoService.delete();
+        return ResponseEntity.status(HttpStatus.OK).body(productDtoList);
+        ///return ResponseEntity.status(HttpStatus.OK);
+    }
+
     private void validarTransacao(TransacaoDto transacaoDto) throws TransacaoInvalidaException {
         if (transacaoDto.getValor() < 0) {
             throw new TransacaoInvalidaException("O valor da transação não pode ser negativo.");
