@@ -12,7 +12,6 @@ public class TransacaoRepository {
     }
 
     public List<Transacao> getDelete(){
-        List<Transacao> esvaziarLista = new ArrayList<>();
         for (int i = 0; i< dtoList.size();i++){
             dtoList.clear();
         }

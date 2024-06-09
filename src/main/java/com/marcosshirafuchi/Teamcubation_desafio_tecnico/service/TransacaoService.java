@@ -30,11 +30,10 @@ public class TransacaoService {
         return resultTransacaoDto;
     }
     public List<TransacaoDto> delete(){
-        List<Transacao> listProduct = repository.getDelete();
-        List<TransacaoDto> transacaoDto = listProduct.stream().map(
+        List<Transacao> listTransacao = repository.getDelete();
+        List<TransacaoDto> transacaoDto = listTransacao.stream().map(
                 value -> new TransacaoDto(value.getValor(),value.getDataHora())
         ).toList();
         return transacaoDto;
     }
-
 }

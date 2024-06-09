@@ -20,7 +20,7 @@ public class TransacaoController {
     private TransacaoService transacaoService;
 
     @PostMapping("/transacao")
-    public ResponseEntity<List<TransacaoDto>> salvar(@Validated @RequestBody List<TransacaoDto> body) throws Exception {
+    public ResponseEntity<List<TransacaoDto>> salvar(@RequestBody List<TransacaoDto> body) throws Exception {
         try {
 
             TransacaoDto transacaoDto = null;
