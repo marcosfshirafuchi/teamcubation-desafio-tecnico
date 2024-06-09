@@ -20,7 +20,7 @@ public class TransacaoController {
     @Autowired
     private TransacaoService transacaoService;
 
-    @PostMapping
+    @PostMapping("/transacao")
     public ResponseEntity<List<TransacaoDto>> salvar(@Validated @RequestBody List<TransacaoDto> body) throws Exception {
         try {
 
@@ -43,9 +43,9 @@ public class TransacaoController {
             throw new TransacaoInvalidaException("O valor da transação não pode ser negativo.");
         }
 
-        if (transacaoDto.getDataHora().isAfter(OffsetDateTime.now(ZoneId.systemDefault()))) {
-            throw new TransacaoInvalidaException("Não pode colocar data futura!");
-        }
+//        if (transacaoDto.getDataHora().isAfter(OffsetDateTime.now(ZoneId.systemDefault()))) {
+//            throw new TransacaoInvalidaException("Não pode colocar data futura!");
+//        }
         if (transacaoDto.getDataHora().isBefore(OffsetDateTime.now(ZoneId.systemDefault()))) {
             throw new TransacaoInvalidaException("Não pode colocar data passada!");
         }
