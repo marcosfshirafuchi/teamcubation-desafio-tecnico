@@ -11,12 +11,8 @@ public class ValidarTransacao {
             throw new TransacaoInvalidaException("O valor da transação não pode ser negativo!");
         }
         OffsetDateTime agora = OffsetDateTime.now();
-        if (transacaoDto.getDataHora().isAfter(agora.minus(Duration.ofMinutes(1)))) {
+        if (transacaoDto.getDataHora().isAfter(agora)) {
             throw new TransacaoInvalidaException("Não pode colocar data futura!");
-        }
-
-        if (transacaoDto.getDataHora().isBefore(agora)) {
-            throw new TransacaoInvalidaException("Não pode colocar data passada!");
         }
     }
 }
