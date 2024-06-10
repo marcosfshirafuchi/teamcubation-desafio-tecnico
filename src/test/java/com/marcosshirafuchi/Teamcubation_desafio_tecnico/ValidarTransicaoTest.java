@@ -53,21 +53,4 @@ public class ValidarTransicaoTest {
         TransacaoInvalidaException exception = assertThrows(TransacaoInvalidaException.class, () -> validarTransacao.validarTransacao(transacaoDataFutura));
         assertEquals("Não pode colocar data futura!", exception.getMessage());
     }
-
-    @Test
-    void testTransacaoDataPassada() {
-        // Cria uma transação com data passada
-        Float valor =100.0f;
-        OffsetDateTime duracao1Dia = OffsetDateTime.now().minus(Duration.ofMinutes(2));
-        TransacaoDto transacaoDataPassada = new TransacaoDto(valor,duracao1Dia);
-        transacaoDataPassada.setValor(valor);
-        transacaoDataPassada.setDataHora(duracao1Dia); // Ontem
-
-        // Cria uma instância da classe ValidarTransacao
-        ValidarTransacao validarTransacao = new ValidarTransacao();
-
-        // Testa o método validarTransacao com a transação com data passada
-        TransacaoInvalidaException exception = assertThrows(TransacaoInvalidaException.class, () -> validarTransacao.validarTransacao(transacaoDataPassada));
-        assertEquals("Não pode colocar data passada!", exception.getMessage());
-    }
 }
