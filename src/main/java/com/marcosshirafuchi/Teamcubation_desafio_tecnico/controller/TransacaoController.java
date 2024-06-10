@@ -1,15 +1,14 @@
 package com.marcosshirafuchi.Teamcubation_desafio_tecnico.controller;
+import com.marcosshirafuchi.Teamcubation_desafio_tecnico.dto.EstatisticaDto;
 import com.marcosshirafuchi.Teamcubation_desafio_tecnico.dto.TransacaoDto;
 import com.marcosshirafuchi.Teamcubation_desafio_tecnico.exception.TransacaoInvalidaException;
+import com.marcosshirafuchi.Teamcubation_desafio_tecnico.exception.ValidarTransacao;
 import com.marcosshirafuchi.Teamcubation_desafio_tecnico.service.TransacaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import java.time.OffsetDateTime;
-import java.time.ZoneId;
 import java.util.List;
 
 @RestController
@@ -27,7 +26,8 @@ public class TransacaoController {
             for (int i = 0; i < body.size(); i++) {
                 transacaoDto = body.get(i);
             }
-            validarTransacao(transacaoDto);
+            ValidarTransacao validarTransacao = new ValidarTransacao();
+            validarTransacao.validarTransacao(transacaoDto);
             List<TransacaoDto> result = transacaoService.save(body);
             return ResponseEntity.status(HttpStatus.OK).body(result);
 
@@ -43,17 +43,26 @@ public class TransacaoController {
         return ResponseEntity.status(HttpStatus.OK).body(productDtoList);
     }
 
-    private void validarTransacao(TransacaoDto transacaoDto) throws TransacaoInvalidaException {
-        if (transacaoDto.getValor() < 0) {
-            throw new TransacaoInvalidaException("O valor da transação não pode ser negativo.");
-        }
+//    @GetMapping("/estatistica")
+//    public ResponseEntity<List<TransacaoDto>> getEstatistica(){
+//        List<TransacaoDto> productDtoList = transacaoService.Estatistica();
+//        return ResponseEntity.status(HttpStatus.OK).body(productDtoList);
+//    }
+//    @GetMapping("/estatistica")
+//    public ResponseEntity<DoubleSummaryStatistics> getEstatistica(){
+//        DoubleSummaryStatistics estatistica = transacaoService.Estatistica();
+//        return ResponseEntity.status(HttpStatus.OK).body(estatistica);
+//    }
 
-        if (transacaoDto.getDataHora().isAfter(OffsetDateTime.now(ZoneId.systemDefault()))) {
-            throw new TransacaoInvalidaException("Não pode colocar data futura!");
-        }
-        if (transacaoDto.getDataHora().isBefore(OffsetDateTime.now(ZoneId.systemDefault()))) {
-            throw new TransacaoInvalidaException("Não pode colocar data passada!");
-        }
-
+    @GetMapping("/estatistica")
+    public ResponseEntity<EstatisticaDto> getEstatistica(){
+        EstatisticaDto estatistica = transacaoService.Estatistica();
+        return ResponseEntity.status(HttpStatus.OK).body(estatistica);
     }
+
+//    @GetMapping("/estatistica")
+//    public ResponseEntity<EstatisticaDto> getEstatistica(){
+//        EstatisticaDto productDtoList = transacaoService.Estatistica();
+//        return ResponseEntity.status(HttpStatus.OK).body(productDtoList);
+//    }
 }

@@ -1,5 +1,4 @@
 package com.marcosshirafuchi.Teamcubation_desafio_tecnico.model;
-
 import java.time.Clock;
 import java.time.OffsetDateTime;
 

@@ -1,4 +1,5 @@
 package com.marcosshirafuchi.Teamcubation_desafio_tecnico.service;
+import com.marcosshirafuchi.Teamcubation_desafio_tecnico.dto.EstatisticaDto;
 import com.marcosshirafuchi.Teamcubation_desafio_tecnico.dto.TransacaoDto;
 import com.marcosshirafuchi.Teamcubation_desafio_tecnico.model.Transacao;
 import com.marcosshirafuchi.Teamcubation_desafio_tecnico.repository.TransacaoRepository;
@@ -36,4 +37,10 @@ public class TransacaoService {
         ).toList();
         return transacaoDto;
     }
+
+    public EstatisticaDto Estatistica() {
+        EstatisticaDto  estatisticaDto = repository.calcularEstatisticas();
+        return estatisticaDto;
+    }
+
 }
