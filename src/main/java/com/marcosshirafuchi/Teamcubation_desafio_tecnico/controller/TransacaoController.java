@@ -1,4 +1,5 @@
 package com.marcosshirafuchi.Teamcubation_desafio_tecnico.controller;
+
 import com.marcosshirafuchi.Teamcubation_desafio_tecnico.dto.EstatisticaDto;
 import com.marcosshirafuchi.Teamcubation_desafio_tecnico.dto.TransacaoDto;
 import com.marcosshirafuchi.Teamcubation_desafio_tecnico.exception.TransacaoInvalidaException;
@@ -21,7 +22,6 @@ public class TransacaoController {
     @PostMapping("/transacao")
     public ResponseEntity<List<TransacaoDto>> salvar(@RequestBody List<TransacaoDto> body) throws Exception {
         try {
-
             TransacaoDto transacaoDto = null;
             for (int i = 0; i < body.size(); i++) {
                 transacaoDto = body.get(i);
@@ -30,7 +30,6 @@ public class TransacaoController {
             validarTransacao.validarTransacao(transacaoDto);
             List<TransacaoDto> result = transacaoService.save(body);
             return ResponseEntity.status(HttpStatus.OK).body(result);
-
         } catch (TransacaoInvalidaException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
@@ -38,7 +37,7 @@ public class TransacaoController {
     }
 
     @DeleteMapping("/transacao")
-    public ResponseEntity<List<TransacaoDto>> delete(){
+    public ResponseEntity<List<TransacaoDto>> delete() {
         List<TransacaoDto> productDtoList = transacaoService.delete();
         return ResponseEntity.status(HttpStatus.OK).body(productDtoList);
     }
@@ -55,7 +54,7 @@ public class TransacaoController {
 //    }
 
     @GetMapping("/estatistica")
-    public ResponseEntity<EstatisticaDto> getEstatistica(){
+    public ResponseEntity<EstatisticaDto> getEstatistica() {
         EstatisticaDto estatistica = transacaoService.Estatistica();
         return ResponseEntity.status(HttpStatus.OK).body(estatistica);
     }

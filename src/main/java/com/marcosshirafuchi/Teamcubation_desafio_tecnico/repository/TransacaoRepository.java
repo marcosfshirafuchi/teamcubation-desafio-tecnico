@@ -20,20 +20,19 @@ public class TransacaoRepository {
         return dtoList;
     }
 
-    // Método para calcular as estatísticas das transações nos últimos 60 segundos
     public EstatisticaDto calcularEstatisticas() {
-        OffsetDateTime agora = OffsetDateTime.now(); // Obtém o momento atual
-        OffsetDateTime limiteInferior = agora.minusSeconds(60); // Calcula o limite inferior (60 segundos atrás)
+        OffsetDateTime agora = OffsetDateTime.now();
+        OffsetDateTime limiteInferior = agora.minusSeconds(60);
 
-        // Variáveis para armazenar os valores das estatísticas
+
         long count = 0;
         double sum = 0;
         double min = Double.MAX_VALUE;
         double max = Double.MIN_VALUE;
 
-        // Itera sobre as transações e calcula as estatísticas
+
         for (Transacao transacao : dtoList) {
-            if (transacao.getDataHora().isAfter(limiteInferior)) { // Verifica se a transação está dentro do intervalo de tempo
+            if (transacao.getDataHora().isAfter(limiteInferior)) {
                 count++;
                 double valor = transacao.getValor();
                 sum += valor;
@@ -42,9 +41,9 @@ public class TransacaoRepository {
             }
         }
 
-        // Calcula a média
+
         double avg = count > 0 ? sum / count : 0;
-        // Cria e retorna o objeto de estatísticas
+
         EstatisticaDto estatisticas = new EstatisticaDto();
         estatisticas.setCount(count);
         estatisticas.setSum(sum);
