@@ -42,26 +42,9 @@ public class TransacaoController {
         return ResponseEntity.status(HttpStatus.OK).body(productDtoList);
     }
 
-//    @GetMapping("/estatistica")
-//    public ResponseEntity<List<TransacaoDto>> getEstatistica(){
-//        List<TransacaoDto> productDtoList = transacaoService.Estatistica();
-//        return ResponseEntity.status(HttpStatus.OK).body(productDtoList);
-//    }
-//    @GetMapping("/estatistica")
-//    public ResponseEntity<DoubleSummaryStatistics> getEstatistica(){
-//        DoubleSummaryStatistics estatistica = transacaoService.Estatistica();
-//        return ResponseEntity.status(HttpStatus.OK).body(estatistica);
-//    }
-
-    @GetMapping("/estatistica")
-    public ResponseEntity<EstatisticaDto> getEstatistica() {
-        EstatisticaDto estatistica = transacaoService.Estatistica();
-        return ResponseEntity.status(HttpStatus.OK).body(estatistica);
+@GetMapping("/estatistica")
+    public ResponseEntity<DoubleSummaryStatistics> getEstatistica(){
+        DoubleSummaryStatistics productDtoList = transacaoService.Estatistica();
+        return ResponseEntity.status(HttpStatus.OK).body(productDtoList);
     }
-
-//    @GetMapping("/estatistica")
-//    public ResponseEntity<EstatisticaDto> getEstatistica(){
-//        EstatisticaDto productDtoList = transacaoService.Estatistica();
-//        return ResponseEntity.status(HttpStatus.OK).body(productDtoList);
-//    }
 }
