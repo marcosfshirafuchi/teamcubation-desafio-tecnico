@@ -38,9 +38,9 @@ public class TransacaoService {
         return transacaoDto;
     }
 
-    public EstatisticaDto Estatistica() {
-        EstatisticaDto  estatisticaDto = repository.calcularEstatisticas();
-        return estatisticaDto;
+   public DoubleSummaryStatistics Estatistica() {
+        DoubleSummaryStatistics  estatistica = repository.getEstatistica();
+        return estatistica;
     }
 
 }
