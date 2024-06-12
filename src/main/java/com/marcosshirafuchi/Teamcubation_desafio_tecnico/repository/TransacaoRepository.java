@@ -20,37 +20,14 @@ public class TransacaoRepository {
         return dtoList;
     }
 
-    public EstatisticaDto calcularEstatisticas() {
-        OffsetDateTime agora = OffsetDateTime.now();
-        OffsetDateTime limiteInferior = agora.minusSeconds(60);
+    public DoubleSummaryStatistics getEstatistica() {
+        DoubleSummaryStatistics doubleSummaryStatistics = new DoubleSummaryStatistics();
+        Iterator<Transacao> iterator = dtoList.listIterator();
+        while (iterator.hasNext()) {
 
-
-        long count = 0;
-        double sum = 0;
-        double min = Double.MAX_VALUE;
-        double max = Double.MIN_VALUE;
-
-
-        for (Transacao transacao : dtoList) {
-            if (transacao.getDataHora().isAfter(limiteInferior)) {
-                count++;
-                double valor = transacao.getValor();
-                sum += valor;
-                min = Math.min(min, valor);
-                max = Math.max(max, valor);
-            }
+            doubleSummaryStatistics
+                    .accept(iterator.next().getValor());
         }
-
-
-        double avg = count > 0 ? sum / count : 0;
-
-        EstatisticaDto estatisticas = new EstatisticaDto();
-        estatisticas.setCount(count);
-        estatisticas.setSum(sum);
-        estatisticas.setAvg(avg);
-        estatisticas.setMin(min);
-        estatisticas.setMax(max);
-        return estatisticas;
+        return doubleSummaryStatistics;
     }
-
 }
