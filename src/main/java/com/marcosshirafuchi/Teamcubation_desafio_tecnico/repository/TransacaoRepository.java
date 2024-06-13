@@ -1,9 +1,9 @@
 package com.marcosshirafuchi.Teamcubation_desafio_tecnico.repository;
-import com.marcosshirafuchi.Teamcubation_desafio_tecnico.dto.EstatisticaDto;
 import com.marcosshirafuchi.Teamcubation_desafio_tecnico.model.Transacao;
 import org.springframework.stereotype.Repository;
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.DoubleSummaryStatistics;
+import java.util.Iterator;
 import java.util.List;
 
 @Repository
